@@ -41,3 +41,28 @@ earliest_flood <- floods %>%
   summarise(earliest_flood = min(dateF))
 
 
+##Question 1
+
+#get distinct names of sights
+floods %>%
+  distinct(names)
+
+#make a subgroup of each locations data
+floods_Palmdale <- floods[floods$names == "FISHEATING CREEK AT PALMDALE",]
+floods_Zolfo <- floods[floods$names == "PEACE RIVER AT US 17 AT ZOLFO SPRINGS",]
+floods_Santa <- floods[floods$names == "SANTA FE RIVER NEAR FORT WHITE",]
+floods_Trilby <- floods[floods$names == " WITHLACOOCHEE RIVER AT US 301 AT TRILBY",]
+
+#plot each locations gauge height data
+plot(floods_Palmdale$dateF, floods_Palmdale$gheight.ft, type="b", pch=19, xlab="Date",
+     ylab = "Stage height (ft)", main =  "FISHEATING CREEK AT PALMDALE")
+
+plot(floods_Zolfo$dateF, floods_Zolfo$gheight.ft, type="b", pch=19, xlab="Date",
+     ylab = "Stage height (ft)", main = "PEACE RIVER AT US 17 AT ZOLFO SPRINGS")
+
+plot(floods_Santa$dateF, floods_Santa$gheight.ft, type="b", pch=19, xlab="Date",
+     ylab = "Stage height (ft)", main = "SANTA FE RIVER NEAR FORT WHITE")
+
+plot(floods_Trilby$dateF, floods_Trilby$gheight.ft, type="b", pch=19, xlab="Date",
+     ylab = "Stage height (ft)", main = " WITHLACOOCHEE RIVER AT US 301 AT TRILBY")
+
