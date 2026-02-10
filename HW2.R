@@ -104,12 +104,26 @@ final_earliest_times <- full_join(half1, half2, by="names")
 
 ##Question 3 
 
-#create a data frame containing highest gauge level above major cateogry
+#create a data frame containing highest gauge level above major category
 highest_stream_stage <- floods %>%
   filter(gheight.ft >= major.ft) %>%
   group_by(names) %>%
   summarise(height_above_major = max(max(gheight.ft) - major.ft))
 
+##question 4
 
-  
+##use select to remove excess columns
+floods_no_extras <-select(floods, -agency, -siteID)
+
+##use ifelse to make a new category for major flood level or not.
+
+floods_no_extras$major_risk <- ifelse(floods_no_extras$gheight.ft >= floods_no_extras$major.ft, 
+                                      "yes","no" )
+
+##Create a histogram of the frequencies of each gauge depth for Santa Fe location
+
+hist(floods_Santa$gheight.ft, main = "Frequeincies of Depths Santa Fe",
+     xlab = "Depth (ft)")
+
+
   
