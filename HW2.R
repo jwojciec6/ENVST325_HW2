@@ -66,3 +66,50 @@ plot(floods_Santa$dateF, floods_Santa$gheight.ft, type="b", pch=19, xlab="Date",
 plot(floods_Trilby$dateF, floods_Trilby$gheight.ft, type="b", pch=19, xlab="Date",
      ylab = "Stage height (ft)", main = " WITHLACOOCHEE RIVER AT US 301 AT TRILBY")
 
+
+##Question 2
+
+#find earliest gauge height for each marker level
+action_earliest <- floods %>%
+  filter(gheight.ft >= action.ft) %>%
+  group_by(names) %>%
+  summarise(earliest_date_action = min(dateF))
+
+flood_earliest <- floods %>%
+  filter(gheight.ft >= flood.ft) %>%
+  group_by(names) %>%
+  summarise(earliest_date_flood = min(dateF))
+
+moderate_earliest <- floods %>%
+  filter(gheight.ft >= moderate.ft) %>%
+  group_by(names) %>%
+  summarise(earliest_date_moderate = min(dateF))
+
+major_earliest <- floods %>%
+  filter(gheight.ft >= major.ft) %>%
+  group_by(names) %>%
+  summarise(earliest_date_major = min(dateF))
+
+#combine all the marker times into one data frame
+half1 <- full_join(action_earliest,
+                    flood_earliest, 
+                    by="names")
+
+half2 <- full_join(moderate_earliest,
+                   major_earliest, 
+                   by="names") 
+
+final_earliest_times <- full_join(half1, half2, by="names")  
+
+
+##Question 3 
+
+#create a data frame containing highest gauge level above major cateogry
+highest_stream_stage <- floods %>%
+  filter(gheight.ft >= major.ft) %>%
+  group_by(names) %>%
+  summarise(height_above_major = max(max(gheight.ft) - major.ft))
+
+
+  
+  
